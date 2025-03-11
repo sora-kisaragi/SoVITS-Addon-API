@@ -1,0 +1,2 @@
+# SoVITS-Addon-API
+GPT-SoVITSのAPI拡張
