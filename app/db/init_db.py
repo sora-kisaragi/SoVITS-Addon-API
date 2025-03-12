@@ -20,8 +20,6 @@ def create_initial_data():
         # サンプルキャラクターの作成
         alice = Character(
             name="Alice",
-            default_speed=1.0,
-            default_emotion=0.5,
         )
         db.add(alice)
         db.commit()

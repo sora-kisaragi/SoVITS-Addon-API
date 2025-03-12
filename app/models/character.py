@@ -11,8 +11,6 @@ class Character(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String, unique=True, nullable=False, index=True)
     default_preset_id = Column(Integer, ForeignKey("presets.id"), nullable=True)
-    default_speed = Column(Float, nullable=False, default=1.0)
-    default_emotion = Column(Float, nullable=False, default=0.5)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     

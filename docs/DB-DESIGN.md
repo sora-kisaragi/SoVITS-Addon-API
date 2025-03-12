@@ -17,8 +17,6 @@
 | `id`         | INTEGER     | PK   | NO   | キャラクターID（自動採番） |
 | `name`       | TEXT UNIQUE | YES  | NO   | キャラクター名（ユニーク） |
 | `default_preset_id` | INTEGER  | FK   | YES  | デフォルトプリセットのID（`presets.id` を参照） |
-| `default_speed` | REAL | NO | NO | デフォルトの話速 |
-| `default_emotion` | REAL | NO | NO | デフォルトの感情パラメータ |
 | `created_at` | TIMESTAMP  | NO   | NO   | 作成日時 |
 | `updated_at` | TIMESTAMP  | NO   | NO   | 更新日時 |
 
@@ -72,10 +70,10 @@ erDiagram
 
 ### **データの例**
 #### **キャラクター情報**
-| id | name      | default_preset_id | default_speed | default_emotion | created_at         | updated_at         |
+| id | name      | default_preset_id | created_at         | updated_at         |
 |----|----------|------------------|---------------|---------------|---------------------|---------------------|
-| 1  | Alice    | 2                | 1.0           | 0.5           | 2025-03-09 10:00:00 | 2025-03-09 10:30:00 |
-| 2  | Bob      | 4                | 0.9           | 0.6           | 2025-03-09 10:05:00 | 2025-03-09 10:25:00 |
+| 1  | Alice    | 2                | 2025-03-09 10:00:00 | 2025-03-09 10:30:00 |
+| 2  | Bob      | 4                | 2025-03-09 10:05:00 | 2025-03-09 10:25:00 |
 
 #### **プリセット情報**
 | id | character_id | name       | speed | emotion | voice_model | created_at         | updated_at         |

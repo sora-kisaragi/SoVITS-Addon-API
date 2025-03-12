@@ -2,7 +2,7 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.database import get_db
+from app.db.database import get_db
 from app.schemas.character import CharacterCreate, CharacterResponse, CharacterUpdate, CharacterList
 from app.services.character_service import CharacterService
 
