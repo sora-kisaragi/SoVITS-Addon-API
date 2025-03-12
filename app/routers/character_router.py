@@ -12,27 +12,27 @@ router = APIRouter(
     tags=["characters"]
 )
 
-@router.get("/characters/", response_model=CharacterList)
-@router.get("/{character_id}", response_model=CharacterResponse)
-def get_character(character_id: int, db: Session = Depends(get_db)):
-    """キャラクター詳細を取得するエンドポイント
+@router.get("", response_model=CharacterList)
+def get_characters(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    """キャラクター一覧を取得するエンドポイント
     
     Args:
-        character_id: キャラクターID
+        skip: スキップする件数
+        limit: 取得する最大件数
         db: データベースセッション
         
     Returns:
-        キャラクター詳細情報
+        キャラクター一覧（items, total, skip, limitを含む）
     """
-    character = CharacterService.get_character(db, character_id)
-
-    if not character:
-        print(f"Router: character with id {character_id} not found")
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Character with id {character_id} not found"
-        )
-    return character
+    characters = CharacterService.get_characters(db, skip=skip, limit=limit)
+    # CharacterListスキーマに合わせてレスポンスを構築
+    total = len(characters)  # 実際には全体の数をカウントする処理が必要かもしれません
+    return {
+        "items": characters,  # charactersをitemsとして返す
+        "total": total,       # 合計件数
+        "skip": skip,         # スキップした件数
+        "limit": limit        # 取得上限件数
+    }
 
 @router.get("/{character_id}", response_model=CharacterResponse)
 def get_character(character_id: int, db: Session = Depends(get_db)):
