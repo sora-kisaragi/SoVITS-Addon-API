@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.db.database import get_db
 from app.schemas.character import CharacterCreate, CharacterResponse, CharacterUpdate, CharacterList
+from app.models.character import Character  # Characterモデルをインポート
 from app.services.character_service import CharacterService
 
 router = APIRouter(
@@ -11,20 +12,27 @@ router = APIRouter(
     tags=["characters"]
 )
 
-@router.get("", response_model=CharacterList)
-def get_characters(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    """キャラクター一覧を取得するエンドポイント
+@router.get("/characters/", response_model=CharacterList)
+def get_characters(
+    skip: int = 0, 
+    limit: int = 100, 
+    db: Session = Depends(get_db)
+):
+    """キャラクター一覧を取得する"""
+    # キャラクター一覧を取得
+    characters = CharacterService.get_characters(db, skip=skip, limit=limit)
     
-    Args:
-        skip: スキップする件数
-        limit: 取得する最大件数
-        db: データベースセッション
-        
-    Returns:
-        キャラクター一覧
-    """
-    characters = CharacterService.get_characters(db, skip, limit)
-    return {"characters": characters}
+    # 総数を取得（ページネーション用）
+    # 修正: Character クラス自体をクエリの対象にする
+    total = db.query(Character).count()
+    
+    # CharacterListのフォーマットに合わせてレスポンスを構築
+    return {
+        "items": characters,
+        "total": total,
+        "skip": skip,
+        "limit": limit
+    }
 
 @router.get("/{character_id}", response_model=CharacterResponse)
 def get_character(character_id: int, db: Session = Depends(get_db)):
