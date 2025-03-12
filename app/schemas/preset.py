@@ -7,14 +7,9 @@ class PresetBase(BaseModel):
     """プリセットの基本情報を定義するベースモデル"""
     name: str = Field(..., description="プリセット名")
     character_id: int = Field(..., description="関連するキャラクターID")
-    description: Optional[str] = Field(None, description="プリセットの説明")
-    # SoVITSのパラメータ
-    speaker_id: int = Field(..., description="話者ID")
-    noise_scale: float = Field(0.6, description="ノイズスケール", ge=0.0, le=1.0)
-    noise_scale_w: float = Field(0.8, description="ノイズスケールW", ge=0.0, le=1.0)
-    length_scale: float = Field(1.0, description="長さスケール", gt=0.0)
-    sdp_ratio: float = Field(0.2, description="SDP比率", ge=0.0, le=1.0)
-    # 追加パラメータがあれば追加
+    speed: float = Field(..., description="音声の速度")
+    emotion: float = Field(..., description="感情の度合い")
+    voice_model: str = Field(..., description="使用する音声モデル")
 
 
 class PresetCreate(PresetBase):
@@ -26,12 +21,9 @@ class PresetUpdate(BaseModel):
     """プリセット更新時に使用するモデル（すべてのフィールドがオプション）"""
     name: Optional[str] = Field(None, description="プリセット名")
     character_id: Optional[int] = Field(None, description="関連するキャラクターID")
-    description: Optional[str] = Field(None, description="プリセットの説明")
-    speaker_id: Optional[int] = Field(None, description="話者ID")
-    noise_scale: Optional[float] = Field(None, description="ノイズスケール", ge=0.0, le=1.0)
-    noise_scale_w: Optional[float] = Field(None, description="ノイズスケールW", ge=0.0, le=1.0)
-    length_scale: Optional[float] = Field(None, description="長さスケール", gt=0.0)
-    sdp_ratio: Optional[float] = Field(None, description="SDP比率", ge=0.0, le=1.0)
+    speed: Optional[float] = Field(None, description="音声の速度")
+    emotion: Optional[float] = Field(None, description="感情の度合い")
+    voice_model: Optional[str] = Field(None, description="使用する音声モデル")
 
 
 class PresetInDBBase(PresetBase):

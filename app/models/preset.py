@@ -1,21 +1,25 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, Text
+from sqlalchemy.sql import func
+from sqlalchemy.sql.sqltypes import DateTime
 from sqlalchemy.orm import relationship
-from datetime import datetime
+
 from app.db.database import Base
+
 
 class Preset(Base):
     """プリセット情報モデル"""
     
     __tablename__ = "presets"
     
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    character_id = Column(Integer, ForeignKey("characters.id"), nullable=False)
-    name = Column(String, nullable=False)
-    speed = Column(Float, nullable=False, default=1.0)
-    emotion = Column(Float, nullable=False, default=0.5)
-    voice_model = Column(String, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+    id = Column(Integer, primary_key=True, index=True)
+    character_id = Column(Integer, ForeignKey("characters.id"))
+    name = Column(String(255), nullable=False)
+    speed = Column(Float, nullable=False)
+    emotion = Column(Float, nullable=False)
+    voice_model = Column(String(255), nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     
-    # リレーションシップ
+    # リレーションシップの定義
+    # 外部キーを明示的に指定
     character = relationship("Character", back_populates="presets", foreign_keys=[character_id])

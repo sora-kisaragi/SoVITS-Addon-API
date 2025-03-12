@@ -65,13 +65,27 @@ class PresetRepository:
             作成されたプリセットオブジェクト
         """
         # dictに変換し、モデルインスタンスを作成
-        db_preset = Preset(**preset_data.dict())
+        # データ変換をより明示的に行い、適切なフィールドのみをマッピング
+        from datetime import datetime
+        current_time = datetime.now()
         
+        preset_dict = {
+            "name": preset_data.name,
+            "character_id": preset_data.character_id,
+            "speed": preset_data.speed,
+            "emotion": preset_data.emotion,
+            "voice_model": preset_data.voice_model,
+            "created_at": current_time,
+            "updated_at": current_time
+        }
+
+        db_preset = Preset(**preset_dict)
+
         # データベースに追加
         db.add(db_preset)
         db.commit()
         db.refresh(db_preset)
-        
+
         return db_preset
 
     def update_preset(
@@ -96,9 +110,15 @@ class PresetRepository:
         # 更新データから辞書を作成（Noneの項目は除外）
         update_data = preset_update.dict(exclude_unset=True)
         
-        # モデルを更新
-        for field, value in update_data.items():
-            setattr(db_preset, field, value)
+        # モデルのフィールドにのみ更新を適用
+        valid_fields = ["name", "character_id", "speed", "emotion", "voice_model"]
+        for field in valid_fields:
+            if field in update_data:
+                setattr(db_preset, field, update_data[field])
+        
+        # 更新時刻を明示的に設定
+        from datetime import datetime
+        db_preset.updated_at = datetime.now()
 
         # データベースに反映
         db.add(db_preset)
