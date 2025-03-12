@@ -2,6 +2,10 @@
 
 ## **1. 環境構築**
 - [ ] 開発環境のセットアップ（Python, SQLite, Flask or FastAPI）
+  - [x] Pythonのインストール
+  - [x] SQliteのインストール
+    - [ ] DBの構築
+  - [ ] FastAPIのセットアップ
 - [ ] 必要なライブラリのインストール（依存関係整理）
 - [ ] SQLiteの初期設定（データベース作成）
 
