@@ -32,7 +32,9 @@ class CharacterService:
         Returns:
             キャラクター情報、存在しない場合はNone
         """
-        return db.query(Character).filter(Character.id == character_id).first()
+        result = db.query(Character).filter(Character.id == character_id).first()
+
+        return result
     
     @staticmethod
     def create_character(db: Session, character: CharacterCreate) -> Character:
