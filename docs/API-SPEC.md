@@ -15,7 +15,7 @@
   | `character`  | string   | 必須 | 使用するキャラクター名 |
   | `preset`     | string   | オプション | 使用するプリセット名（キャラクターごとのプリセット一覧から選択）。 |
   | `speed`      | number   | オプション | 話速。プリセットの値を上書き可能。 |
-  | `emotion`    | string   | オプション | 感情パラメータ。プリセットの値を上書き可能。 |
+  | `emotion`    | number   | オプション | 感情パラメータ。プリセットの値を上書き可能。 |
   | `webhook_url`| string   | オプション | Discord Webhook の URL。指定された場合、生成完了後に通知を送信。 |
 
 - **レスポンス:**  
