@@ -67,9 +67,10 @@ SoVITS Addon API は、GPT-SoVITS エンジンを拡張し、以下の機能を�
 
 ### 前提条件
 
-- Python 3.9 以上
+- Python 3.9 以上 3.11 未満
 - SQLite
 - CUDA 対応 GPU（リアルタイム音声生成のため）
+- GPT-SoVITSが動作する環境
 
 ### セットアップ手順
 
@@ -77,25 +78,32 @@ SoVITS Addon API は、GPT-SoVITS エンジンを拡張し、以下の機能を�
     ```bash
     git clone https://github.com/sora-kisaragi/sovits-addon-api.git
     cd sovits-addon-api
-    git clone https://github.com/RVC-Boss/GPT-SoVITS.git
     ```
 
-2. **仮想環境の作成 & アクティベート**
+2. **GPT-SoVITSのダウンロード**
+    ```bash
+    curl -L "https://huggingface.co/lj1995/GPT-SoVITS-windows-package/resolve/main/GPT-SoVITS-beta.7z?download=true" -o ./downloads/GPT-SoVITS-beta.7z
+    SEVEN_ZIP="/c/Program Files/7-Zip/7z.exe"
+    mkdir -p ./GPT-SoVITS
+    "$SEVEN_ZIP" x ./downloads/GPT-SoVITS-beta.7z -o"$(cygpath -w ./GPT-SoVITS)" -y
+    ```
+
+3. **仮想環境の作成 & アクティベート**
     ```bash
     python -m venv venv
     source venv/bin/activate  # Windows の場合: venv\Scripts\activate
     ```
 
-3. **依存ライブラリのインストール**
+4. **依存ライブラリのインストール**
     ```bash
     pip install -r requirements.txt
     ```
 
-4. **データベースのセットアップ**
+5. **データベースのセットアップ**
     - 提供された SQL スクリプトを実行してテーブルを作成します。
     - CSV インポートで初期プリセットデータを登録してください。
 
-5. **環境変数の設定**
+6. **環境変数の設定**
     - プロジェクトルートに `.env` ファイルを作成し、以下のように設定します。
     ```ini
     # .env の例
