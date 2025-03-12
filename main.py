@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.db.init_db import init_db
 from app.routers import character_router
+from app.routers import preset_router
 
 app = FastAPI(
     title="SoVITS Addon API",
@@ -26,6 +27,7 @@ app.add_middleware(
 
 # ルーターの登録
 app.include_router(character_router.router)
+app.include_router(preset_router.router)
 
 
 @app.get("/")
