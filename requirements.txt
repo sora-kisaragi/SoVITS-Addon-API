@@ -1,0 +1,16 @@
+# FastAPI関連
+fastapi>=0.95.0
+uvicorn>=0.21.0
+python-multipart>=0.0.6
+
+# データベース関連
+sqlalchemy>=2.0.0
+alembic>=1.10.0
+
+# 音声処理関連
+pydub>=0.25.1
+numpy>=1.24.0
+
+# その他ユーティリティ
+python-dotenv>=1.0.0
+requests>=2.28.0
