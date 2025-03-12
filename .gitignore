@@ -178,3 +178,6 @@ GPT-SoVITS/
 
 #database
 *.db
+
+#editor
+.vscode/
