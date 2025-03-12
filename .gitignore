@@ -175,3 +175,6 @@ GPT-SoVITS/
 
 # venv
 .venv/
+
+#database
+*.db
